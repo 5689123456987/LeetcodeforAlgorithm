@@ -117,3 +117,70 @@ return second;
 };
 ```
 
+
+
+#### 3、构造最长回文
+
+给定一个字符串s，你可以从中删除一些字符，使得剩下的串是一个回文串。如何删除才能使得回文串最长呢？ 输出需要删除的字符个数。 
+
+**输入描述:**
+
+```
+输入数据有多组，每组包含一个字符串s，且保证:1<=s.length<=1000.
+  
+```
+
+##### **输出描述:**
+
+```
+对于每组数据，输出一个整数，代表最少需要删除的字符个数。
+```
+
+##### **输入例子1:**
+
+```
+abcda
+google
+```
+
+##### **输出例子1:**
+
+```
+2
+2
+```
+
+采用dp思想进行求取最少删除字符个数
+
+```c++
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <string.h>
+#include <string>
+using namespace std;
+ 
+int dp[1010][1010];
+string x,y;
+ 
+int main()
+{
+    while(cin >> x)
+    {
+        y = x;
+        int len = x.size();
+        // 把x字符串反转
+        reverse(y.begin(),y.end());
+        for(int i = 0; i < len; i ++)
+            for(int j = 0; j < len; j ++)
+                if(x[i] == y[j])
+                    dp[i + 1][j + 1] = dp[i][j] + 1;
+                else
+                    dp[i + 1][j + 1] = max(dp[i][j + 1],dp[i + 1][j]);
+        //dp数组中最后一位存储的是最长回文字符串的长度
+        cout << len - dp[len][len] << endl;
+    }
+    return 0;
+}
+```
+
